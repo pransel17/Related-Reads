@@ -6,6 +6,7 @@ import connectMongoDB from "./db/connectMongoDB.js";
 const app = express();
 dotenv.config(); // load env file. to access priv fiiles
 app.use(express.json()); // to read json dataa
+app.use(express.urlencoded({ extended: true })); // VERYVERY IMPORTANT FOR DEBUGGING If you send this form in Postman using x-www-form-urlencoded
 
 //console.log(process.env.MONGO_URI); // checking if working
 connectMongoDB(); // this will print the function at connectMongoosekineme

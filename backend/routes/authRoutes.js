@@ -1,5 +1,5 @@
 import express from "express";
-
+import { signup, signin } from "../controllers/auth.controller.js"
 const router = express.Router(); // initializing router
 
 console.log("authroutes is working");
@@ -7,17 +7,9 @@ console.log("authroutes is working");
 
 
 
-router.get("/sign-in", (req,res) => {
-    res.json({
-        data: "You hit sign in endpoint"
-    })
-})
+router.post("/sign-up", signup)
 
-router.get("/sign-up", (req,res) => {
-    res.json({
-        data: "You hit sign up endpoint"
-    })
-})
+router.post("/sign-in", signin)
 
 router.get("/log-out", (req,res) => {
     res.json({
