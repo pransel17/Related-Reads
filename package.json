@@ -1,0 +1,28 @@
+{
+  "name": "related-reads",
+  "version": "1.0.0",
+  "description": "A web-based book library where users can add books by title, author, and genre, leave reviews, and rate them. Books can be sorted by popularity or recency. Built with the MERN stack — MongoDB stores books and reviews, Express and Node.js handle the backend, and a responsive React frontend delivers a smooth user experience.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon backend/server.js",
+    "start": "node backend/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.7.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
