@@ -2,6 +2,8 @@ import User from "../models/user.models.js"
 import bcrypt from "bcryptjs";
 import generateTokenAndSetCookie from "../lib/utils/generateTokenAndSetCookie.js"
 
+
+
 console.log("auth.controller is working ")
 export const signup = async (req,res) => {
     try { // good programming habit for error dai
@@ -77,13 +79,29 @@ export const signup = async (req,res) => {
 
 
 
-
-
-export const signin = (req,res) => {
+// account already existing
+export const signin = async (req,res) => {
     try{ // good programming habit for error dai
+        const {UserName, Password} = req.body;
+        const user = await User.findOne({UserName}) // checking if existing sa db
+        const isPasswordCorrect = await bcrypt.compare(Password, user.Password || "")
+        if(!isPasswordCorrect || !user){
+            return res.status(400).json({error: "Invalid Username or Password"})
+        }
+
+        generateTokenAndSetCookie(user._id,res); // since everything is okay, cookie for the user yiie
+
+        res.status(200).json({
+            _id: user._id,
+            UserName: user.UserName,
+            Email: user.Email,
+            Password: user.Password
+        })
 
     }
     catch(error){
+        console.log("Error in signin controller", error.message)
+        res.status(500).json({error: "Invalid user data"})
 
     }
 }
