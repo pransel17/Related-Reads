@@ -1,21 +1,16 @@
 import express from "express";
-import { signup, signin } from "../controllers/auth.controller.js"
-const router = express.Router(); // initializing router
+import { signup, signin, logout, getMe } from "../controllers/auth.controller.js"
+import { protectRoute } from "../middleware/protectRouter.js";
 
+
+const router = express.Router(); // initializing router
 console.log("authroutes is working");
 
 
-
-
 router.post("/sign-up", signup)
-
 router.post("/sign-in", signin)
-
-router.get("/log-out", (req,res) => {
-    res.json({
-        data: "You hit sign up endpoint"
-    })
-})
+router.post("/log-out", logout)
+router.get("/me", protectRoute, getMe);
 
 
 

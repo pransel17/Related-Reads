@@ -106,11 +106,29 @@ export const signin = async (req,res) => {
     }
 }
 
-export const logout = (req,res) => {
-    try{ // good programming habit for error dai
+
+export const logout = async (req,res) => {
+    try{ 
+        res.cookie("jwt", "", {maxAge:0}) // terminate cookie
+        res.status(200).json({message: "Logged out successfully"})
 
     }
     catch(error){
+        console.log("Error in logout controller", error.message)
+        res.status(500).json({error: "Invalid user data"})
+    }
+}
 
+
+
+// authentication 
+export const getMe = async (req,res) => {
+    try{ 
+        const user = await User.findById(req.user._id).select("-Password");
+        res.status(200).json(user);
+    }
+    catch(error){
+        console.log("Error in getMe Controller", error.message);
+        res.status(500).json({error: "Internal  Server Error"})
     }
 }
