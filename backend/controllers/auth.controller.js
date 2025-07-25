@@ -71,7 +71,7 @@ export const signup = async (req,res) => {
 
     }
     catch(error){
-        console.error("Signin Error:", error); // 🔥 shows the real issue in terminal
+        console.error("Signin Error:", error); //  shows the real issue in terminal
         return res.status(500).json({error: "There's a problem in sign-up function"})
 
     }

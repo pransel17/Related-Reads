@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import authRoutes from "../backend/routes/authRoutes.js"
 import connectMongoDB from "./db/connectMongoDB.js";
 import cookieParser from "cookie-parser";
-
+import userRoutes from "../backend/routes/user.routes.js"
 
 const app = express();
 app.use(cookieParser()); // parses cookies sent by the browser (or Postman) and makes them readable inside your backend
@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true })); // VERYVERY IMPORTANT FOR DEBUG
 connectMongoDB(); // this will print the function at connectMongoosekineme
 
 app.use("/api/auth", authRoutes); // router 
+app.use("/api/user", userRoutes)
 
 
 app.listen(2001, () => {

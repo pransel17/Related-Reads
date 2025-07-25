@@ -29,6 +29,26 @@ const userSchema = new mongoose.Schema({
     ProfileImage:{
         type: String,
         default: "",
+    },
+
+    FavGenres:{
+        type: String,
+        default: "",
+    },
+
+    bio:{
+        type: String,
+        default: "",
+    },
+
+    Gender:{
+        type: String,
+        default: "",
+    },
+
+    CityAndCountry:{
+        type: String,
+        default: "",
     }
 
 })
