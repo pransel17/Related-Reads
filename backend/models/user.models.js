@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     Password: {
         type: String,
         required: true,
-        minLength: 6
+        minLength: 6,
     },
 
     ProfileImage:{
@@ -49,7 +49,24 @@ const userSchema = new mongoose.Schema({
     CityAndCountry:{
         type: String,
         default: "",
-    }
+    },
+
+    Read:{
+        type: String,
+        default: "", 
+    },
+
+    ToRead:{
+        type: String,
+        default: "", 
+    },
+
+    CurrentlyReading:{
+        type: String,
+        default: "", 
+    },
+
+
 
 })
 
