@@ -1,5 +1,7 @@
 import User from "../models/user.models.js"
 import bcrypt from "bcryptjs"
+import { v2 as cloudinary } from 'cloudinary'; // import for cloudinary
+
 
 export const MyProfile = async (req,res) =>{
     const {UserName} = req.params
@@ -22,7 +24,6 @@ export const MyProfile = async (req,res) =>{
 
 export const EditProfile = async (req,res) =>{
     const {CurrentPassword, NewPassword, NewProfileImage, NewGender, NewCityAndCountry, bio,} = req.body;
-
     const userID = req.user._id;
 
     try{
@@ -45,27 +46,33 @@ export const EditProfile = async (req,res) =>{
             }
 
             // all goods
-
             const salt = await bcrypt.genSalt(10);
             user.Password = await bcrypt.hash(NewPassword, salt)
         }
 
+        if(NewProfileImage){
+
+            // idelete muna exisiting photo if meron para di ubos space
+            if(user.ProfileImage){
+                await cloudinary.uploader.destroy(user.ProfileImage.split("/").pop().split(".")[0])
+            }
+            // upload
+            const uploadedResponse = await cloudinary.uploader.upload(NewProfileImage); 
+            user.ProfileImage = uploadedResponse.secure_url;
+        }
+
 
         user.bio = bio || user.bio
+        user.Gender = NewGender || user.Gender
+        user.CityAndCountry = NewCityAndCountry || user.CityAndCountry
 
-
-
-        user = await user.save(); // u know mgdb saverr
+        user = await user.save(); // save into mgdb
         return res.status(200).json(user);
 
 
         
-
-
-
     } catch (error){
         res.status(500).json({error:error.message})
         console.log("Error in MyProfile function")
-
     }
 }

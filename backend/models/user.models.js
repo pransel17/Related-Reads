@@ -41,11 +41,6 @@ const userSchema = new mongoose.Schema({
         default: "",
     },
 
-    Gender:{
-        type: String,
-        default: "",
-    },
-
     CityAndCountry:{
         type: String,
         default: "",
@@ -65,6 +60,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "", 
     },
+
+    Gender:{
+        type: String,
+        default: "", 
+    },
+
+    
 
 
 
