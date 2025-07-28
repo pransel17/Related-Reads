@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 
 
 // dadaan here lahat ng acc logged in if going to other routes too ensure security
-console.log("protect router is workin ✅")
+console.log("protect router is workin ")
 
 export const protectRoute = async (req, res, next) => {
     try{

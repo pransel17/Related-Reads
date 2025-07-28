@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
         minLength: 6
     },
 
-
     Password: {
         type: String,
         required: true,
@@ -45,27 +44,30 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-
-    Read:{
-        type: String,
-        default: "", 
-    },
-
-    ToRead:{
-        type: String,
-        default: "", 
-    },
-
-    CurrentlyReading:{
-        type: String,
-        default: "", 
-    },
-
+    
     Gender:{
         type: String,
         default: "", 
     },
 
+
+    // reading status
+
+    Read: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BookInfo",
+    }],
+    
+    ToRead: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BookInfo",
+    }],
+    
+    CurrentlyReading: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BookInfo",
+    }],
+    
     
 
 
