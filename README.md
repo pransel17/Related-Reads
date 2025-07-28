@@ -5,7 +5,7 @@ A web-based books review where users can add books by title, author, and genre, 
 
 ___
 
-notes:
+notes (for me):
 
 
 backend part 
@@ -14,9 +14,10 @@ backend part
 
 ----> updating reading status bout a book
 
-i approached it by storing the book ids in the reading status array in user sche,ma. so i can just write a function that will make the books appear in a their specific list in user (my books) part 
+i approached it by storing the book ids in the reading status array in user sche,ma. so i can just write a function that will make the books appear in their specific list in user (my books) part 
 
 -----> showing reviews
+
 display the reviiews of a book by finding which reviews have same book id 
 
 ----> Axios  for ggoogle api integ
