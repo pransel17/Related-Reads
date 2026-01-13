@@ -4,7 +4,7 @@ import authRoutes from "../backend/routes/authRoutes.js"
 import connectMongoDB from "./db/connectMongoDB.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "../backend/routes/user.routes.js"
-import reviewRoutes from "../backend/routes/review.routes.js"
+import reviewRoutes from "../backend/routes/review.routes.js" 
 import bookRoutes from "./routes/books.routes.js"
 import { v2 as cloudinary } from 'cloudinary'; // import for cloudinary
 
