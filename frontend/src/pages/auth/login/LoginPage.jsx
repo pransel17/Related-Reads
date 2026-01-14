@@ -23,16 +23,17 @@ const LoginPage = () => {
   return ( // here irrender yung html
     <div className="min-h-screen flex items-center justify-center bg-base-100 p-6">
         
-        <fieldset className="fieldset fieldset-lg bg-[#A4C0ED] rounded-box w-full max-w-md p-4">
-          <legend className="fieldset-legend">Login</legend>
+        <fieldset className="fieldset fieldset-lg bg-[#A4C0ED] rounded-box w-full max-w-md p-4 flex flex-col items-center">
+        <legend className="fieldset-legend flex flex-col items-center w-full">
+          <span className="text-xl font-normal">Welcome Back</span>
+          <span className="text-sm font-bold">Login to Continue</span>
+        </legend>
 
-          <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" />
+          <input type="email" className="input bg-white rounded-[40px]" placeholder="Email" />
+          <input type="password" className="input bg-white rounded-[40px]" placeholder="Password" />
 
-          <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" />
-
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-neutral mt-4 rounded-[40px] w-30">Login</button>
+          <a href="/ForgotPassword" className="link link-hover text-sm "> Forgot Password</a>
         </fieldset>
 
 
