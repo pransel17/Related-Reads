@@ -1,4 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: retro --default; /* This makes Retro the default theme */
+  themes: retro --default;
 }
+
+.text-black * {
+  color: #000000 !important;
+}
+
