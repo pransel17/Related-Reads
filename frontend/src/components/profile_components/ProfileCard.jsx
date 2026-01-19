@@ -1,15 +1,23 @@
-import React from 'react'
+
 
 const ProfileCard = () => {
+
   return (
-    <div className="card w-96 bg-base-100 card-md shadow-sm m-auto">
-      <div className="card-body">
-        <h2 className="card-title">Medium Card</h2>
-        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-        <div className="justify-end card-actions">
-          <button className="btn btn-primary">Buy Now</button>
+    <div className="card w-full max-w-[900px] min-h-[200px] bg-base-100 shadow-sm mx-auto mt-10 border border-base-300">
+      <div className="card-body flex-row items-center justify-between gap-4">
+
+        <div>
+          <div className="avatar">
+            <div className="w-24 rounded">
+              <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
+            </div>
+          </div>
+          <h2>Details</h2>
+          
         </div>
+
       </div>
+      
     </div>
 
   )
