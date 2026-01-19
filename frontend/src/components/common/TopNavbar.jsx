@@ -23,7 +23,7 @@ const TopNavbar = () => {
 
         <div className="navbar-end">
           <ul className="menu menu-horizontal px-1 font-medium text-black mr-10 gap-3">
-            <li><Link to='/home'><a className="hover:bg-transparent hover:text-gray-600">Home</a></Link></li>
+            <li><Link to='/home' className="hover:bg-transparent hover:text-gray-600" >Home</Link></li>
             <li><a className="hover:bg-transparent hover:text-gray-600">My Books</a></li>
             <li>
               <details>

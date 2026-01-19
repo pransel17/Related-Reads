@@ -1,10 +1,12 @@
 import TopNavbar from "../../components/common/topnavbar"
+import ProfileCard from "../../components/profile_components/ProfileCard"
 
 const ProfilePage = () => {
   return (
-    <div>ProfilePage
+    <div>
 
         <TopNavbar/>
+        <ProfileCard/>
     </div>
   )
 }
