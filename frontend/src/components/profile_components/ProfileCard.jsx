@@ -65,7 +65,7 @@ const ProfileCard = ({user}) => {
             <h2 className="font-bold">My BookShelves</h2>
             <div className="flex flex-row gap-4 mt-6">
               {/* READ */}
-              <div className="flex flex-col items-center justify-center bg-[#244d6d] text-white w-32 h-13 py-3 rounded-  shadow-md hover:bg-[#1d3e57] cursor-pointer transition-colors">
+              <div className="flex flex-col items-center justify-center bg-[#244d6d] text-white w-32 h-13 py-3 rounded-xl shadow-md hover:bg-[#1d3e57] cursor-pointer transition-colors">
                 <span className="text-xs">Read</span>
                 <span className="text-xs opacity-80">{user?.Read?.length || 0}</span>
               </div>
