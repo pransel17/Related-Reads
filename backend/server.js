@@ -7,8 +7,17 @@ import userRoutes from "../backend/routes/user.routes.js"
 import reviewRoutes from "../backend/routes/review.routes.js" 
 import bookRoutes from "./routes/books.routes.js"
 import { v2 as cloudinary } from 'cloudinary'; // import for cloudinary
+import cors from "cors";
 
 const app = express();
+
+
+app.use(cors({
+    origin: "http://localhost:3000", // React port 
+    credentials: true // Required since using cookieParser
+}));
+
+
 app.use(cookieParser()); // parses cookies sent by the browser (or Postman) and makes them readable inside your backend
 dotenv.config(); // load env file. to access priv fiiles
 app.use(express.json()); // to read json dataa

@@ -49,6 +49,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "", 
     },
+    
+    Birthday: {
+        type: Date,
+        default: null
+    },
 
 
     // reading status
@@ -67,6 +72,10 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "BookInfo",
     }],
+
+
+
+
     
     
 

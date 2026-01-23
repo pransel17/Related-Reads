@@ -1,22 +1,50 @@
 import { useState } from 'react'
 import { IoPersonOutline  } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineMail } from "react-icons/ai";
-
+import axios from 'axios';
 
 const SignUpPage = () => {
 
-
+    const navigate = useNavigate();
     const [formData,setFormData] = useState({
-        username: "",
-        email: "",
-        password: "",
+        UserName: "",
+        Email: "",
+        Password: "",
     })
 
-    const handleSubmit = (e) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+        setIsLoading(true);
+        setErrorMessage("");
+
+        try {
+            //Send data to the backend
+            // Vite proxy handles the 'http://localhost:2001' part
+            // always check the route,, hhahahah
+            const res = await axios.post("/api/auth/sign-up", formData);
+            
+            console.log("Success:", res.data);
+            setIsSuccess(true); // Trigger the success UI
+            setTimeout(() => {
+              navigate("/login"); 
+            }, 2000); // Wait for 2000ms (2 seconds)
+
+        } catch (err) {
+            // Capture backend errors 
+            const errorMsg = err.response?.data?.error || "Signup failed. Try again.";
+            setErrorMessage(errorMsg);
+            console.error("Signup error:", errorMsg);
+        } finally {
+            setIsLoading(false);
+        }
+
+
     }
 
     const handleInputChange = (e) => { // universal function that update any field in form without needing a separate function for the name, email, and password
@@ -56,12 +84,12 @@ const SignUpPage = () => {
             <IoPersonOutline className="text-gray-500" />
             <input 
               type="text" 
-              name="username"
+              name="UserName"
               className="grow text-black" 
               placeholder="Enter Username" 
               onChange={handleInputChange} 
-              value={formData.username}
-            />
+              value={formData.UserName}
+            /> 
           </label>
           
 
@@ -69,11 +97,11 @@ const SignUpPage = () => {
             <AiOutlineMail  className="text-gray-500" />
             <input 
               type="email" 
-              name="email"
+              name="Email"
               className="grow text-black" 
               placeholder="Enter Email" 
               onChange={handleInputChange}
-              value={formData.email}
+              value={formData.Email}
             />
           </label>
   
@@ -82,13 +110,25 @@ const SignUpPage = () => {
             <CiLock className="text-gray-500" />
             <input 
               type="password" 
-              name="password"
+              name="Password"
               className="grow text-black" 
               placeholder="Enter Password" 
               onChange={handleInputChange}
-              value={formData.password}
+              value={formData.Password}
             />
           </label>
+
+          {isSuccess && (
+          <div className="flex flex-col items-center gap-2 text-green-700 font-bold mb-2">
+              <p>Signup Successful! Redirecting...</p>
+              <span className="loading loading-bars loading-sm"></span>
+          </div>
+           )}
+
+
+          {errorMessage && (
+          <p className="text-red-600 font-bold text-xs"> {errorMessage}</p> 
+          )}
   
   
           <button type="submit" className="btn btn-neutral bg-[#F6FFDE] mt-4 border-none rounded-[40px] w-30 mb-2">Sign Up</button>

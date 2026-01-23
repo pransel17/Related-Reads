@@ -1,25 +1,45 @@
 import { useState } from "react"
+import { MdOutlineEdit } from "react-icons/md";
+import EditProfileModal from "../../pages/home/EditProfileModal";
 
 
 
 
 const ProfileCard = ({user}) => {
 
-  const [ProfileInfo, SetProfileInfo] = useState("")
+  const [ProfileInfo, SetProfileInfo] = useState({
+
+  })
 
   const avatarImage = user?.profileimage || "https://img.daisyui.com/images/profile/demo/batperson@192.webp";
   const NotSpecified = "Not specified"
   
+  //  modal for edit profile
+  const handleOpenModal = () => {
+    const modal = document.getElementById('edit_profile_modal');
+    if (modal) {
+      modal.showModal();  
+    }
+  };
+
+
+
+
+  
 
   return (
-    <div className="w-full max-w-[900px] mx-auto mt-10">
+    <div className="w-full max-w-[900px] mx-auto mt-3">
+
+      <EditProfileModal user={user} />
       <div className="flex justify-between items-center mb-3 px-4">
         <div className="w-32"></div> 
         
         <h1 className="text-xl font-bold text-[#244d6d]">Profile</h1>
         
-        <button className="flex items-center gap-2 bg-[#244d6d] text-white px-4 py-2 rounded-full hover:bg-[#1d3e57] transition-all shadow-md text-sm font-semibold">
+        <button className="flex items-center gap-2 bg-[#244d6d] text-white px-4 py-2 rounded-full hover:bg-[#1d3e57] transition-all shadow-md text-sm font-semibold"
+                onClick={handleOpenModal}>
           Edit Profile
+          <MdOutlineEdit />
         </button>
       
       </div>
@@ -35,9 +55,9 @@ const ProfileCard = ({user}) => {
               <img src={avatarImage} alt="User Avatar" />
             </div>
           </div>
-          <h3 className="font-bold text-lg mt-2">Details</h3>
-          <p className="text-sm text-gray-600">{user?.gender || NotSpecified }</p>
-          <p className="text-sm text-gray-600">{user?.cityandcountry || "City, Country"}</p>
+          <h3 className="font-bold text-lg mt-2">{user?.bio || "Bio" }</h3>
+          <p className="text-sm text-gray-600">{user?.gender || "Gender" }, {user?.cityandcountry || "City, Country"}</p>
+          <p className="text-sm text-gray-600">{user?.Birthday || "Birthday"}</p>
 
         </div>
 
