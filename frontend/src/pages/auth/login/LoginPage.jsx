@@ -1,20 +1,47 @@
 import { useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoPersonOutline  } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
-
+import axios from 'axios';
 
 
 const LoginPage = () => {
+
+
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
+    const navigate = useNavigate();
+
+
     const [formData, setFormData] = useState({
-        username: "",
-        password: ""
+        UserName: "",
+        Password: ""
     })
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(formData); // issend niya sa yung value when submit
-    }
+        setIsLoading(true);
+        setErrorMessage("");
+        console.log(formData);
+        try{
+        const res = await axios.post("/api/auth/sign-in", formData)
+
+        setTimeout(() => {
+          navigate("/profile"); 
+          }, 2000); 
+
+        }
+
+         
+        catch(error){
+        const errorMsg = error.response?.data?.error || "Login failed. Please try again.";
+        setErrorMessage(errorMsg);
+        setIsLoading(false); 
+        }
+        
+      }
 
     const handleInputChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -23,7 +50,7 @@ const LoginPage = () => {
     const isError = false;
 
 
-  return ( // here irrender yung html
+  return (  
     <div className="min-h-screen flex items-center justify-center bg-base-100 p-6">
 
 
@@ -56,12 +83,12 @@ const LoginPage = () => {
         <label className="input bg-white rounded-[40px] flex items-center gap-2 w-full max-w-xs border-none">
           <IoPersonOutline className="text-gray-500" />
           <input 
-            type="username" 
-            name="username"
+            type="text" 
+            name="UserName"
             className="grow text-black" 
             placeholder="Enter Username" 
             onChange={handleInputChange} 
-            value={formData.username}
+            value={formData.UserName}
           />
         </label>
 
@@ -69,13 +96,17 @@ const LoginPage = () => {
           <CiLock className="text-gray-500" />
           <input 
             type="password" 
-            name="password"
+            name="Password"
             className="grow text-black" 
             placeholder="Enter Password" 
             onChange={handleInputChange}
-            value={formData.password}
+            value={formData.Password}
           />
         </label>
+
+        {errorMessage && (
+          <p className="text-red-600 font-bold text-xs"> {errorMessage}</p> 
+        )}
 
 
         {/* no linked route with this button, i need to ensure security sa with backend pa aayusin*/}
