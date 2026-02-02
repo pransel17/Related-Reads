@@ -11,7 +11,6 @@ const LoginPage = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [isSuccess, setIsSuccess] = useState(false);
     const navigate = useNavigate();
 
 
@@ -21,27 +20,21 @@ const LoginPage = () => {
     })
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         setIsLoading(true);
         setErrorMessage("");
-        console.log(formData);
-        try{
-        const res = await axios.post("/api/auth/sign-in", formData)
-
-        setTimeout(() => {
-          navigate("/profile"); 
-          }, 2000); 
-
-        }
-
-         
-        catch(error){
-        const errorMsg = error.response?.data?.error || "Login failed. Please try again.";
-        setErrorMessage(errorMsg);
-        setIsLoading(false); 
-        }
+    
         
-      }
+        try {
+            const res = await axios.post("/api/auth/sign-in", formData);
+            navigate(`/profile/${formData.UserName}`); 
+                  } catch (error) {
+            const errorMsg = error.response?.data?.error || "Login failed. Please try again.";
+            setErrorMessage(errorMsg);
+        } finally {
+            setIsLoading(false); 
+        }
+    }
 
     const handleInputChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -57,13 +50,13 @@ const LoginPage = () => {
       <div className="absolute top-0 left-6 flex items-center gap-3">
         <div className="w-15 h-15 rounded-full overflow-hidden border-none">
             <img 
-                src="Logos/logo-1.png" 
+                src="/Logos/logo-1.png" 
                 alt="Logo Icon" 
                 className="w-full h-full object-cover border-none" />
         </div>
         <div className="w-40 h-20  overflow-hidden border-none">
           <img 
-            src="Logos/logo-2.png" 
+            src="/Logos/logo-2.png" 
             alt="Logo Icon" 
             className="w-full h-full object-cover border-none" />
         </div>
@@ -107,10 +100,17 @@ const LoginPage = () => {
         {errorMessage && (
           <p className="text-red-600 font-bold text-xs"> {errorMessage}</p> 
         )}
+        
 
 
         {/* no linked route with this button, i need to ensure security sa with backend pa aayusin*/}
-        <button type="submit" className="btn btn-neutral bg-[#F6FFDE] mt-4 border-none rounded-[40px] w-30 mb-2">Login</button>
+        <button 
+          type="submit" 
+          disabled={isLoading} 
+          className="btn btn-neutral bg-[#F6FFDE] mt-4 border-none rounded-[40px] w-30 mb-2"
+        > {isLoading ? <span className="loading loading-spinner"></span> : "Login"}
+        </button>
+
         <Link 
           to="/ForgotPassword" 
           className="link link-hover text-sm text-black"> Forgot Password </Link>

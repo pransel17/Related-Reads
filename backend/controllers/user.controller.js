@@ -23,7 +23,7 @@ export const MyProfile = async (req,res) =>{
 }
 
 export const EditProfile = async (req,res) =>{
-    const {CurrentPassword, NewPassword, NewProfileImage, NewGender, NewCityAndCountry, bio, NewBirthday} = req.body;
+    const {CurrentPassword, NewPassword, NewProfileImage, NewGender, NewCityAndCountry, bio, NewBirthday, newFavGenres} = req.body;
     const userID = req.user._id;
 
     try{
@@ -66,6 +66,7 @@ export const EditProfile = async (req,res) =>{
         user.Gender = NewGender || user.Gender
         user.CityAndCountry = NewCityAndCountry || user.CityAndCountry
         user.Birthday = NewBirthday || user.Birthday
+        user.FavGenres = newFavGenres || user.FavGenres
 
         user = await user.save(); // save into mgdb
         return res.status(200).json(user);

@@ -11,7 +11,7 @@ const ProfileCard = ({user}) => {
 
   })
 
-  const avatarImage = user?.profileimage || "https://img.daisyui.com/images/profile/demo/batperson@192.webp";
+  const avatarImage = user?.ProfileImage || "https://img.daisyui.com/images/profile/demo/batperson@192.webp";
   const NotSpecified = "Not specified"
   
   //  modal for edit profile
@@ -64,7 +64,7 @@ const ProfileCard = ({user}) => {
 
         {/* RIGHT COLUMN: USERNAME & SHELVES */}
         <div className="Column2 flex-1 w-full max-w-[300px] md:text-left">
-          <h2 className="text-2xl font-bold mb-4">{user?.username || NotSpecified}</h2>
+          <h2 className="text-2xl font-bold mb-4">{user?.UserName || NotSpecified}</h2>
           
           <div className="bg-[#244d6d] w-20 h-12 rounded-lg flex flex-col justify-center items-center shadow-inner">
              <p className="text-xl font-bold text-white">{user?.Read?.length || 0}</p>
