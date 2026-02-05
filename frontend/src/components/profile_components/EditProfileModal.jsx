@@ -1,22 +1,41 @@
 import { useState } from "react";
+import axios from "axios";
 
 const EditProfileModal = ({ user }) => {
   const [formData, setFormData] = useState({
     NewCityAndCountry: user?.CityAndCountry || "",
-    NewBio: user?.bio,
-    Birthday: user?.Birthday ? user.Birthday.split('T')[0] : "",
+    Newbio: user?.bio || "",
+    NewBirthday: user?.Birthday ? user.Birthday.split('T')[0] : "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const closeModal = () => document.getElementById('edit_profile_modal').close();
+  const closeModal = () => {
+    const modal = document.getElementById('edit_profile_modal');
+    if (modal) modal.close();
+  };
 
   const handleSubmit = async () => {
-    console.log("Updating profile with:", formData);
-    // Add your update logic here
-    closeModal();
+    try {
+      console.log("Updating profile with:", formData);
+      
+      // FIXED: Added http:// and ensured URL is correct
+      const response = await axios.post(`http://localhost:2001/api/user/EditProfile`, 
+        formData, 
+        { withCredentials: true }
+      );
+
+      if (response.status === 200) {
+        alert("Profile updated successfully!");
+        closeModal();
+        window.location.reload(); 
+      }
+    } catch (err) { // FIXED: Added (err) variable here
+      console.error("Submission Error:", err.response?.data || err.message);
+      alert("Failed to update profile: " + (err.response?.data?.error || "Server Error"));
+    }
   };
 
   return (
@@ -28,8 +47,8 @@ const EditProfileModal = ({ user }) => {
           <label className="text-sm font-semibold">Bio</label>
           <input 
             type="text" 
-            name="NewBio"
-            value={formData.NewBio}
+            name="Newbio"
+            value={formData.Newbio}
             onChange={handleChange}
             className="input input-bordered w-full" 
           />
@@ -46,16 +65,16 @@ const EditProfileModal = ({ user }) => {
           <label className="text-sm font-semibold">Birthday</label>
           <input 
             type="date" 
-            name="Birthday"
-            value={formData.Birthday}
+            name="NewBirthday"
+            value={formData.NewBirthday}
             onChange={handleChange}
             className="input input-bordered w-full" 
           />
         </div>
 
         <div className="modal-action">
-          <button className="btn" onClick={closeModal}>Close</button>
-          <button className="btn bg-[#244d6d] text-white" onClick={handleSubmit}>Save Changes</button>
+          <button type="button" className="btn" onClick={closeModal}>Close</button>
+          <button type="button" className="btn bg-[#244d6d] text-white" onClick={handleSubmit}>Save Changes</button>
         </div>
       </div>
     </dialog>

@@ -1,15 +1,13 @@
 import { useState } from "react"
 import { MdOutlineEdit } from "react-icons/md";
-import EditProfileModal from "../../pages/home/EditProfileModal";
+import EditProfileModal from "./EditProfileModal";
 
 
 
 
 const ProfileCard = ({user}) => {
 
-  const [ProfileInfo, SetProfileInfo] = useState({
 
-  })
 
   const avatarImage = user?.ProfileImage || "https://img.daisyui.com/images/profile/demo/batperson@192.webp";
   const NotSpecified = "Not specified"
@@ -56,7 +54,7 @@ const ProfileCard = ({user}) => {
             </div>
           </div>
           <h3 className="font-bold text-lg mt-2">{user?.bio || "Bio" }</h3>
-          <p className="text-sm text-gray-600">{user?.gender || "Gender" }, {user?.cityandcountry || "City, Country"}</p>
+          <p className="text-sm text-gray-600">{user?.Gender || "Gender" }, {user?.CityAndCountry || "City, Country"}</p>
           <p className="text-sm text-gray-600">{user?.Birthday || "Birthday"}</p>
 
         </div>

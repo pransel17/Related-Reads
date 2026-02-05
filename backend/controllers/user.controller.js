@@ -23,7 +23,7 @@ export const MyProfile = async (req,res) =>{
 }
 
 export const EditProfile = async (req,res) =>{
-    const {CurrentPassword, NewPassword, NewProfileImage, NewGender, NewCityAndCountry, bio, NewBirthday, newFavGenres} = req.body;
+    const {CurrentPassword, NewPassword, NewProfileImage, NewGender, NewCityAndCountry, Newbio, NewBirthday, newFavGenres} = req.body;
     const userID = req.user._id;
 
     try{
@@ -62,7 +62,7 @@ export const EditProfile = async (req,res) =>{
         }
 
 
-        user.bio = bio || user.bio
+        user.bio = Newbio || user.bio
         user.Gender = NewGender || user.Gender
         user.CityAndCountry = NewCityAndCountry || user.CityAndCountry
         user.Birthday = NewBirthday || user.Birthday

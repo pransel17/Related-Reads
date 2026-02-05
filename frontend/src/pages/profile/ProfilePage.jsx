@@ -12,7 +12,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchProfileData = async () => {
-     // console.log("Requesting profile with Axios", UserName);
+
       try {
         setLoading(true);
         
