@@ -1,11 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
-import authRoutes from "../backend/routes/authRoutes.js"
+import authRoutes from "./routes/auth.routes.js"
 import connectMongoDB from "./db/connectMongoDB.js";
 import cookieParser from "cookie-parser";
 import userRoutes from "../backend/routes/user.routes.js"
 import reviewRoutes from "../backend/routes/review.routes.js" 
 import bookRoutes from "./routes/books.routes.js"
+import homeRoutes from "./routes/home.routes.js";
 import { v2 as cloudinary } from 'cloudinary'; // import for cloudinary
 import cors from "cors";
 
@@ -38,6 +39,8 @@ app.use("/api/auth", authRoutes); // router
 app.use("/api/user", userRoutes)
 app.use("/api/review", reviewRoutes)
 app.use("/api/books", bookRoutes);
+app.use("/api/home", homeRoutes);
+
 
 
 

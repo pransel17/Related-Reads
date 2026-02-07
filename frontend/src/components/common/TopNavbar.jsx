@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const TopNavbar = () => {
   return (
-    <div className="navbar bg-base-100 shadow-sm px-4 lg:px-6">
+    <div className="navbar w-full bg-base-100 shadow-sm px-4 lg:px-6 py-0.5">
       
       <div className="navbar-start flex items-center gap-3 lg:ml-10">
         
