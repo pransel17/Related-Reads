@@ -1,6 +1,6 @@
 import BookInfo from "../models/book.model.js";
 import User from "../models/user.models.js";
-
+import getRealTimeTrending from "../services/trendingBooks.service.js";
 
 
 export const saveBookWithStatus = async (req, res) => {
@@ -98,5 +98,17 @@ export const getBookPreview = async (req, res) => {
   } catch (error) {
     console.error("Error fetching book preview:", error);
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+
+// for trending books 
+// TRENDING CONTROLLER (Zero MongoDB Load)
+export const fetchTrendingBooks = async (req, res) => {
+  try {
+    const books = await getRealTimeTrending();
+    return res.status(200).json(books);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to load trending books" });
   }
 };

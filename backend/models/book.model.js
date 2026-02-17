@@ -11,6 +11,9 @@ const BookInfoSchema = new mongoose.Schema({
     Description:{
         type: String
     },
+    Image: { 
+        type: String 
+    },
     NumOfPages:{
         type: Number
     },

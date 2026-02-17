@@ -28,10 +28,10 @@ const TopNavbar = () => {
 
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 lg:w-14 lg:h-14 rounded-full overflow-hidden">
-            <img src="Logos/logo-1.png" alt="Logo Icon" className="w-full h-full object-cover" />
+            <img src="/Logos/logo-1.png" alt="Logo Icon" className="w-full h-full object-cover" />
           </div>
           <div className="w-24 lg:w-32 h-16 overflow-hidden hidden sm:block">
-            <img src="Logos/logo-2.png" alt="Logo Text" className="w-full h-full object-contain" />
+            <img src="/Logos/logo-2.png" alt="Logo Text" className="w-full h-full object-contain" />
           </div>
         </div>
       </div>
