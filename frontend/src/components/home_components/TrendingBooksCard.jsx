@@ -5,7 +5,7 @@ const TrendingBooksCard = ({ book }) => {
     <div className="card bg-base-100 image-full w-full h-full shadow-xl overflow-hidden group">
       <figure className="w-full h-full">
         <img
-          src={Image || "https://via.placeholder.com/150"}
+          src={Image || "https://placehold.co/400x600?text=No+Cover"}
           alt={BookName}
           className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
         />

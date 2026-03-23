@@ -1,6 +1,18 @@
 import { Link } from "react-router-dom"
+import { User } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 const TopNavbar = () => {
+
+  const { user, loading } = useAuth();
+
+  const ProfileImageplaceholder = "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp";
+  // fallback di ko pa naayos backend ng image
+
+
+
+
+
   return (
     <div className="navbar w-full bg-base-100 shadow-sm px-4 lg:px-6 py-0.5">
       
@@ -23,6 +35,7 @@ const TopNavbar = () => {
               </ul>
             </li>
             <li><a>Contact US</a></li>
+            <li><Link to='/home'>Home</Link></li>
           </ul>
         </div>
 
@@ -52,6 +65,15 @@ const TopNavbar = () => {
           <li><a className="hover:bg-transparent hover:text-gray-600">Contact US</a></li>
         </ul>
       </div>
+
+      {/*Profilee placeholder */}
+      <div className="avatar flex flex-start">
+        <div className="w-10 rounded-full">
+          <img src={User?.ProfileImage || ProfileImageplaceholder}  />
+        </div>
+      </div>
+
+      
     </div>
   )
 }

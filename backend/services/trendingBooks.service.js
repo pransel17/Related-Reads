@@ -5,6 +5,7 @@ const getRealTimeTrending = async () => {
     const response = await axios.get("https://www.googleapis.com/books/v1/volumes", {
       params: {
         q: "subject:fiction", 
+        key: process.env.GOOGLE_BOOKS_API_KEY,
         orderBy: "relevance", 
         maxResults: 6,
         printType: "books"

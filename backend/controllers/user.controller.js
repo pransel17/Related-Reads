@@ -23,7 +23,7 @@ export const MyProfile = async (req,res) =>{
 }
 
 export const EditProfile = async (req,res) =>{
-    const {CurrentPassword, NewPassword, NewProfileImage, NewGender, NewCityAndCountry, Newbio, NewBirthday, newFavGenres} = req.body;
+    const {CurrentPassword, NewPassword, NewProfileImage, NewGender, NewCityAndCountry, Newbio, NewBirthday, newFavGenres, NewReadingChallengeGoal} = req.body;
     const userID = req.user._id;
 
     try{
@@ -67,6 +67,7 @@ export const EditProfile = async (req,res) =>{
         user.CityAndCountry = NewCityAndCountry || user.CityAndCountry
         user.Birthday = NewBirthday || user.Birthday
         user.FavGenres = newFavGenres || user.FavGenres
+        user.ReadingChallengeGoal = NewReadingChallengeGoal || user.ReadingChallengeGoal
 
         user = await user.save(); // save into mgdb
         return res.status(200).json(user);
@@ -76,5 +77,27 @@ export const EditProfile = async (req,res) =>{
     } catch (error){
         res.status(500).json({error:error.message})
         console.log("Error in MyProfile function")
+    }
+}
+
+export const ProfileInfo = async (req, res) => {
+    
+    try {
+        // Since your 'protect' middleware is working, req.user._id is available
+        const userID = req.user._id;
+
+        // Fetch the user by ID and exclude the password for security
+        const user = await User.findById(userID).select("-Password");
+
+        if (!user) {
+            return res.status(404).json({ error: "User session not found" });
+        }
+
+        // Return the full user object
+        res.status(200).json(user);
+
+    } catch (error) {
+        console.error("Error in ProfileInfo function:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 }

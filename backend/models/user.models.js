@@ -73,6 +73,11 @@ const userSchema = new mongoose.Schema({
       ref: "BookInfo",
     }],
 
+    ReadingChallengeGoal: {
+      type: Number
+      
+    },
+
 
 
 

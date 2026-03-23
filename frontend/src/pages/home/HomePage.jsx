@@ -3,7 +3,8 @@ import SearchBooks from "../../components/home_components/searchBooks"
 import SuggestedBookCard from "../../components/home_components/SuggestedBookCard"
 import axios from "axios"
 import TrendingBooksCard from "../../components/home_components/TrendingBooksCard"
-import ReadingChallengePart from "../../components/home_components/ReadingChallengePart"
+import ReadingChallengePart from "../../components/home_components/ReadingChallengeBanner"
+import AdvertisementBanner from "../../components/home_components/AdvertisementBanner"
 import { useEffect, useState } from "react"
 
 const HomePage = () => {
@@ -39,7 +40,6 @@ const HomePage = () => {
 
         {/* CENTER PART */}
         <div> 
-
           <div className="max-w-4xl mx-auto px-4">
 
           <div className="text-sm my-3 font-bold text-[#244d6d] text-center" > Trending Books</div>
@@ -72,7 +72,10 @@ const HomePage = () => {
 
           </div>
           </div>
+        </div>
 
+        <div className="mr-5">
+          <AdvertisementBanner/>  
         </div>
 
 

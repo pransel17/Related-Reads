@@ -5,6 +5,7 @@ const searchGoogleBooks = async (query) => {
     const response = await axios.get("https://www.googleapis.com/books/v1/volumes", {
       params: {
         q: query,
+        key: process.env.GOOGLE_BOOKS_API_KEY,
         maxResults: 1,
       },
     });
