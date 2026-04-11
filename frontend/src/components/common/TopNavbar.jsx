@@ -66,12 +66,18 @@ const TopNavbar = () => {
         </ul>
       </div>
 
-      {/*Profilee placeholder */}
-      <div className="avatar flex flex-start">
-        <div className="w-10 rounded-full">
-          <img src={User?.ProfileImage || ProfileImageplaceholder}  />
+      <Link 
+        to={`/profile/${user?.UserName}`} 
+        className="avatar flex items-center hover:opacity-80 transition-opacity cursor-pointer"
+      >
+        {/*Profilee placeholder */}
+        <div className="avatar flex flex-start">
+          <div className="w-10 rounded-full">
+            <img src={user?.ProfileImage || ProfileImageplaceholder}  />
+          </div>
         </div>
-      </div>
+
+      </Link>
 
       
     </div>
