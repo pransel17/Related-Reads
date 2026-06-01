@@ -3,6 +3,7 @@ import LoginPage from './pages/auth/login/LoginPage';
 import SignUpPage from './pages/auth/signup/SignUpPage';
 import HomePage from './pages/home/HomePage';
 import ProfilePage from './pages/profile/ProfilePage';
+import BookPage from './pages/book/BookPage';
 
 
 // ROUTESS HEREE
@@ -17,6 +18,8 @@ function App (){
         <Route path='/signup' element={<SignUpPage/>}/>
         <Route path='/profile/:UserName' element={<ProfilePage/>}/>
         <Route path='/home' element={<HomePage/>}/>
+        <Route path='/book/:id' element={<BookPage/>}/>
+
 
 
 

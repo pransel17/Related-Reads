@@ -1,3 +1,6 @@
+import mongoose from "mongoose";
+import axios from "axios";
+
 import BookInfo from "../models/book.model.js";
 import User from "../models/user.models.js";
 import getRealTimeTrending from "../services/trendingBooks.service.js";
@@ -84,20 +87,83 @@ export const getBookPreview = async (req, res) => {
       return res.status(400).json({ message: "bookId is required" });
     }
 
-    const book = await BookInfo.findById(bookId);
+    let book = null;
+    let liveRatings = { averageRating: null, ratingsCount: null };
 
-    if (!book) {
-      return res.status(404).json({ message: "Book not found" });
+    if (mongoose.Types.ObjectId.isValid(bookId)) {
+      const dbBook = await BookInfo.findById(bookId).lean();
+      if (dbBook) {
+        book = {
+          ...dbBook,
+          AverageRating: dbBook.AverageRating || "0.0",
+          NumOfReviews: dbBook.NumOfReviews || 0
+        };
+      }
     }
 
-    res.status(200).json({
+
+    if (!book) {
+
+      const localRecord = await BookInfo.findOne({ googleBookId: bookId }).lean();
+      
+      try {
+        const googleResponse = await axios.get(
+          `https://www.googleapis.com/books/v1/volumes/${bookId}?key=${process.env.GOOGLE_BOOKS_API_KEY}`
+        );
+
+        const volumeInfo = googleResponse.data?.volumeInfo;
+
+        if (volumeInfo) {
+          book = {
+            _id: bookId, 
+            BookName: volumeInfo.title || localRecord?.BookName || "Unknown Title",
+            AuthorName: volumeInfo.authors?.[0] || localRecord?.AuthorName || "Unknown Author",
+            Description: volumeInfo.description || localRecord?.Description || "No description available.",
+            NumOfPages: volumeInfo.pageCount || localRecord?.NumOfPages || 0,
+            PublicationDate: volumeInfo.publishedDate || localRecord?.PublicationDate || null,
+            Image: volumeInfo.imageLinks?.thumbnail || volumeInfo.imageLinks?.smallThumbnail || localRecord?.Image || "https://placehold.co/400x600?text=No+Cover",
+            Language: volumeInfo.language === "en" ? "English" : "Other",
+            
+
+            AverageRating: volumeInfo.averageRating ? String(volumeInfo.averageRating) : "0.0",
+            NumOfReviews: volumeInfo.ratingsCount || 0
+          };
+        }
+      } catch (apiError) {
+        console.error("Google Books API real-time ratings pull failed:", apiError.message);
+        
+
+        if (localRecord) {
+          book = {
+            ...localRecord,
+            AverageRating: localRecord.AverageRating || "0.0",
+            NumOfReviews: localRecord.NumOfReviews || 0
+          };
+        } else {
+          book = {
+            _id: bookId,
+            BookName: "Preview Temporarily Offline",
+            AuthorName: "Notice",
+            Description: "Could not pull live stream stats from Google API right now.",
+            NumOfPages: 0,
+            PublicationDate: null,
+            Image: "https://placehold.co/400x600?text=Sync+Offline",
+            Language: "English",
+            AverageRating: "0.0",
+            NumOfReviews: 0
+          };
+        }
+      }
+    }
+
+    return res.status(200).json({
       message: "Book preview retrieved successfully",
       book
     });
 
   } catch (error) {
     console.error("Error fetching book preview:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+    return res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
