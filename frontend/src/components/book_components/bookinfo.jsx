@@ -16,7 +16,6 @@ const BookInfo = ({ book }) => {
         </div>
       </div>
 
-      <hr className="border-gray-300" />
 
 
       <div className="prose max-w-none text-gray-700 leading-relaxed">

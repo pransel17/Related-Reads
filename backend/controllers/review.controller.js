@@ -51,7 +51,7 @@ export const updateReadingStatus = async (req,res) => {
     const userId = req.user._id;
     const {bookId, status} =  req.body;
 
-    if (!req.body) { //  FOR DEBUGGING JUSMEEE
+    if (!req.body) {  
         return res.status(400).json({ error: "Request body is missing" });
     }
 
@@ -65,11 +65,10 @@ export const updateReadingStatus = async (req,res) => {
     
 
     try{
-        const user = await User.findById(userId); // instatiating so i can access the User schema 
+        const user = await User.findById(userId);  
         if (!user)  return res.status(404).json({ error: "User not found" })
 
-        // for an instance na existing na yung book id in any status 
-        // keep only the book ids that are NOT equal to bookid
+        
         user.Read = user.Read.filter((id) => id.toString() !== bookId);
         user.ToRead = user.ToRead.filter((id) => id.toString() !== bookId);
         user.CurrentlyReading = user.CurrentlyReading.filter((id) => id.toString() !== bookId);
@@ -83,3 +82,20 @@ export const updateReadingStatus = async (req,res) => {
         return res.status(500).json({ error: "Server error while updating reading status" });
     }
 }
+
+
+
+ export const getBookReviews = async (req, res) => {
+    try {
+        const { bookId } = req.params;
+
+        const reviews = await Review.find({ book: bookId })
+            .populate("user", "UserName ProfileImage")  
+            .sort({ createdAt: -1 });  
+
+        return res.status(200).json({ reviews });
+    } catch (error) {
+        console.error("Error fetching book reviews:", error);
+        return res.status(500).json({ error: "Server error while fetching reviews." });
+    }
+};

@@ -5,6 +5,9 @@ import TopNavbar from "../../components/common/topnavbar";
 import BookInfo from "../../components/book_components/bookinfo";
 import Bookmetadata from "../../components/book_components/bookmetadata";
 import Bookcover from "../../components/book_components/bookcover";
+import Bookauthor from "../../components/book_components/bookauthor";
+import Bookreviewuser from "../../components/book_components/bookreviewuser";
+
 
 const BookPage = () => {
 
@@ -83,6 +86,8 @@ const BookPage = () => {
         <div className="w-full space-y-6">
           <BookInfo book={book} />
           <Bookmetadata book={book} />
+          <Bookauthor bookData={book} />
+          
         </div>
 
       </div>

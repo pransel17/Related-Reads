@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+const { Schema } = mongoose;
+
 const BookInfoSchema = new mongoose.Schema({
 
     BookName:{
@@ -32,6 +34,15 @@ const BookInfoSchema = new mongoose.Schema({
     NumOfReviews: {
         type: Number,
         default: 0
+    },
+
+    AuthorDescription: {
+      type: Schema.Types.Mixed, // Allows saving text as either a plain string or a Paragraph Array
+      default: "No biography details available for this author."
+    },
+    AuthorPhoto: {
+      type: String,
+      default: "https://placehold.co/150x150?text=No+Avatar"
     }
 })
 

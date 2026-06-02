@@ -6,19 +6,70 @@ import User from "../models/user.models.js";
 import getRealTimeTrending from "../services/trendingBooks.service.js";
 
 
+const fetchAuthorExtraDetails = async (authorName) => {
+  const fallback = {
+    AuthorDescription: "No biography details available for this author.",
+    AuthorPhoto: "https://placehold.co/150x150?text=No+Avatar"
+  };
+
+  if (!authorName || authorName === "Unknown" || authorName === "Notice") {
+    return fallback;
+  }
+
+  try {
+
+    const searchUrl = `https://openlibrary.org/search/authors.json?q=${encodeURIComponent(authorName)}`;
+    const searchResponse = await axios.get(searchUrl);
+    const authorKey = searchResponse.data?.docs?.[0]?.key;
+
+    if (authorKey) {
+
+      const authorProfileUrl = `https://openlibrary.org/authors/${authorKey}.json`;
+      const profileResponse = await axios.get(authorProfileUrl);
+      const data = profileResponse.data;
+
+
+      let description = fallback.AuthorDescription;
+      if (typeof data.bio === "string") {
+        description = data.bio;
+      } else if (data.bio && typeof data.bio === "object" && data.bio.value) {
+        description = data.bio.value;
+      }
+
+      // Format author photo URL using Open Library's ID syntax
+      let photoUrl = fallback.AuthorPhoto;
+      if (data.photos && data.photos.length > 0) {
+        photoUrl = `https://covers.openlibrary.org/a/id/${data.photos[0]}-L.jpg`;
+      }
+
+      return {
+        AuthorDescription: description,
+        AuthorPhoto: photoUrl
+      };
+    }
+  } catch (error) {
+    console.error(`Failed to automatically sync bio for ${authorName}:`, error.message);
+  }
+
+  return fallback;
+};
+
+
 export const saveBookWithStatus = async (req, res) => {
   try {
     const { userId, status, book } = req.body;
-    // book = { title, authors, description, pageCount, publishedDate, language }
 
     if (!userId || !status || !book) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Map googleBooks fields to your schema
+
+    const authorName = book.authors?.[0] || "Unknown";
+    const authorExtras = await fetchAuthorExtraDetails(authorName);
+
     const bookData = {
       BookName: book.title,
-      AuthorName: book.authors?.[0] || "Unknown",
+      AuthorName: authorName,
       Description: book.description || "",
       NumOfPages: book.pageCount || 0,
       PublicationDate: book.publishedDate ? new Date(book.publishedDate) : null,
@@ -30,21 +81,21 @@ export const saveBookWithStatus = async (req, res) => {
           case "fr": return "French";
           default: return "Other";
         }
-      })()
+      })(),
+
+      AuthorDescription: book.authorDescription || authorExtras.AuthorDescription,
+      AuthorPhoto: book.authorPhoto || authorExtras.AuthorPhoto
     };
 
-    // 1️⃣ Check if book already exists
     let existingBook = await BookInfo.findOne({
       BookName: bookData.BookName,
       AuthorName: bookData.AuthorName
     });
 
-    // 2️⃣ If not exist, save it
     if (!existingBook) {
       existingBook = await BookInfo.create(bookData);
     }
 
-    // 3️⃣ Add book to user's reading list
     if (!["Read", "ToRead", "CurrentlyReading"].includes(status)) {
       return res.status(400).json({ message: "Invalid status" });
     }
@@ -52,13 +103,11 @@ export const saveBookWithStatus = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Avoid duplicates
     if (!user[status].includes(existingBook._id)) {
       user[status].push(existingBook._id);
       await user.save();
     }
 
-    // Return updated user with populated lists
     const updatedUser = await User.findById(userId)
       .populate("Read")
       .populate("ToRead")
@@ -78,7 +127,6 @@ export const saveBookWithStatus = async (req, res) => {
 
 
 
-// Get book info / preview by ID
 export const getBookPreview = async (req, res) => {
   try {
     const { bookId } = req.params;
@@ -88,22 +136,26 @@ export const getBookPreview = async (req, res) => {
     }
 
     let book = null;
-    let liveRatings = { averageRating: null, ratingsCount: null };
 
     if (mongoose.Types.ObjectId.isValid(bookId)) {
       const dbBook = await BookInfo.findById(bookId).lean();
       if (dbBook) {
+
+        const authorExtras = (!dbBook.AuthorDescription || !dbBook.AuthorPhoto)
+          ? await fetchAuthorExtraDetails(dbBook.AuthorName)
+          : {};
+
         book = {
           ...dbBook,
           AverageRating: dbBook.AverageRating || "0.0",
-          NumOfReviews: dbBook.NumOfReviews || 0
+          NumOfReviews: dbBook.NumOfReviews || 0,
+          AuthorDescription: dbBook.AuthorDescription || authorExtras.AuthorDescription,
+          AuthorPhoto: dbBook.AuthorPhoto || authorExtras.AuthorPhoto
         };
       }
     }
 
-
     if (!book) {
-
       const localRecord = await BookInfo.findOne({ googleBookId: bookId }).lean();
       
       try {
@@ -114,33 +166,40 @@ export const getBookPreview = async (req, res) => {
         const volumeInfo = googleResponse.data?.volumeInfo;
 
         if (volumeInfo) {
+          const authorName = volumeInfo.authors?.[0] || localRecord?.AuthorName || "Unknown Author";
+          const authorExtras = await fetchAuthorExtraDetails(authorName);
+
           book = {
+            ...localRecord,
             _id: bookId, 
             BookName: volumeInfo.title || localRecord?.BookName || "Unknown Title",
-            AuthorName: volumeInfo.authors?.[0] || localRecord?.AuthorName || "Unknown Author",
+            AuthorName: authorName,
             Description: volumeInfo.description || localRecord?.Description || "No description available.",
             NumOfPages: volumeInfo.pageCount || localRecord?.NumOfPages || 0,
             PublicationDate: volumeInfo.publishedDate || localRecord?.PublicationDate || null,
             Image: volumeInfo.imageLinks?.thumbnail || volumeInfo.imageLinks?.smallThumbnail || localRecord?.Image || "https://placehold.co/400x600?text=No+Cover",
             Language: volumeInfo.language === "en" ? "English" : "Other",
-            
-
             AverageRating: volumeInfo.averageRating ? String(volumeInfo.averageRating) : "0.0",
-            NumOfReviews: volumeInfo.ratingsCount || 0
+            NumOfReviews: volumeInfo.ratingsCount || 0,
+
+            AuthorDescription: localRecord?.AuthorDescription || authorExtras.AuthorDescription,
+            AuthorPhoto: localRecord?.AuthorPhoto || authorExtras.AuthorPhoto
           };
         }
       } catch (apiError) {
         console.error("Google Books API real-time ratings pull failed:", apiError.message);
         
-
         if (localRecord) {
           book = {
             ...localRecord,
             AverageRating: localRecord.AverageRating || "0.0",
-            NumOfReviews: localRecord.NumOfReviews || 0
+            NumOfReviews: localRecord.NumOfReviews || 0,
+            AuthorDescription: localRecord.AuthorDescription || "No biography details available.",
+            AuthorPhoto: localRecord.AuthorPhoto || "https://placehold.co/150x150?text=No+Avatar"
           };
         } else {
           book = {
+            ...localRecord,
             _id: bookId,
             BookName: "Preview Temporarily Offline",
             AuthorName: "Notice",
@@ -150,10 +209,17 @@ export const getBookPreview = async (req, res) => {
             Image: "https://placehold.co/400x600?text=Sync+Offline",
             Language: "English",
             AverageRating: "0.0",
-            NumOfReviews: 0
+            NumOfReviews: 0,
+            AuthorDescription: "No biography details available.",
+            AuthorPhoto: "https://placehold.co/150x150?text=No+Avatar"
           };
         }
       }
+    }
+
+
+    if (book && typeof book.AuthorDescription === "string") {
+      book.AuthorDescription = book.AuthorDescription.split("\n\n").filter(p => p.trim() !== "");
     }
 
     return res.status(200).json({
@@ -168,8 +234,7 @@ export const getBookPreview = async (req, res) => {
 };
 
 
-// for trending books 
-// TRENDING CONTROLLER (Zero MongoDB Load)
+
 export const fetchTrendingBooks = async (req, res) => {
   try {
     const books = await getRealTimeTrending();

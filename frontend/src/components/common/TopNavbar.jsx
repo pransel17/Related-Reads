@@ -14,7 +14,7 @@ const TopNavbar = () => {
 
 
   return (
-    <div className="navbar w-full bg-base-100 shadow-sm px-4 lg:px-6 py-0">
+    <div className="navbar w-full bg-base-100 shadow-sm px-4 lg:px-6 py-0 sticky top-0">
       
       <div className="navbar-start flex items-center gap-3 lg:ml-10">
         
