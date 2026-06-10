@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 import { User } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import NavbarProfileDropdown from "./NavbarProfileDropdown";
+import axios from 'axios';
 
 const TopNavbar = () => {
 
@@ -14,7 +16,7 @@ const TopNavbar = () => {
 
 
   return (
-    <div className="navbar w-full bg-base-100 shadow-sm px-4 lg:px-6 py-0 sticky top-0">
+    <div className="navbar w-full bg-base-100 shadow-sm px-4 lg:px-6 py-0 sticky top-0 z-[100]">
       
       <div className="navbar-start flex items-center gap-3 lg:ml-10">
         
@@ -66,18 +68,21 @@ const TopNavbar = () => {
         </ul>
       </div>
 
-      <Link 
-        to={`/profile/${user?.UserName}`} 
-        className="avatar flex items-center hover:opacity-80 transition-opacity cursor-pointer"
-      >
-        {/*Profilee placeholder */}
-        <div className="avatar flex flex-start">
-          <div className="w-10 rounded-full">
-            <img src={user?.ProfileImage || ProfileImageplaceholder}  />
-          </div>
-        </div>
-
-      </Link>
+      <div className="navbar-end lg:w-auto w-auto flex justify-end">
+        <NavbarProfileDropdown 
+          user={user} 
+          placeholder={ProfileImageplaceholder}
+          logout={async () => {
+            try {
+              // Now that axios is imported, this will work
+              await axios.post("http://localhost:2001/api/auth/log-out", {}, { withCredentials: true });
+              window.location.href = "/login"; 
+            } catch (error) {
+              console.error("Logout failed:", error);
+            }
+          }}
+        />
+      </div>
 
       
     </div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import home_skeleton from '../skeletons/home_skeleton';
 
 // ACCEPT THE id PROP HERE
 const TrendingBooksCard = ({ book, id }) => {

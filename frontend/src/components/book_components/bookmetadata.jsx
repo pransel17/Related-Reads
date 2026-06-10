@@ -3,7 +3,7 @@ import React from 'react'
 const Bookmetadata = ({ book }) => {
     if (!book) return null;
   return (
-    <div className="bg-base-100 p-4 rounded-sm  space-y-2 text-sm w-full max-w-md">
+    <div className="bg-base-100/30 p-4 rounded-sm shadow-xl space-y-2 text-sm w-full max-w-lg">
         
         <h3 className="font-bold text-[#244d6d] text-base mb-3">This Edition</h3>
         <div className="grid grid-cols-2 gap-y-2">

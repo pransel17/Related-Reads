@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema({
-    user: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true
   },
   book: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "BookInfo", // ref to bookinfo
+    type: String,  
     required: true
+     
   },
   rating: {
     type: Number,
@@ -30,7 +30,6 @@ const reviewSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-
 }, { timestamps: true });
 
 const Review = mongoose.model("Review", reviewSchema);

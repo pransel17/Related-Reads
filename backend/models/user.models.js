@@ -56,21 +56,16 @@ const userSchema = new mongoose.Schema({
     },
 
 
-    // reading status
-
     Read: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "BookInfo",
+      type: String,  
     }],
     
     ToRead: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "BookInfo",
+      type: String,  
     }],
     
     CurrentlyReading: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "BookInfo",
+      type: String,  
     }],
 
     ReadingChallengeGoal: {

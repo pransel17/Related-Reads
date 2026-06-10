@@ -7,6 +7,8 @@ import Bookmetadata from "../../components/book_components/bookmetadata";
 import Bookcover from "../../components/book_components/bookcover";
 import Bookauthor from "../../components/book_components/bookauthor";
 import Bookreviewuser from "../../components/book_components/bookreviewuser";
+import BookCreateComment from "../../components/book_components/bookcreatecomment";
+import BookReviewComments from "../../components/book_components/bookreviewcomment";
 
 
 const BookPage = () => {
@@ -17,6 +19,7 @@ const BookPage = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
 
   useEffect(() => {
@@ -45,6 +48,27 @@ const BookPage = () => {
   }, [id]); 
 
 
+  useEffect(() => {
+      if (id) {
+        // ADD { withCredentials: true } HERE
+        axios.get(`http://localhost:2001/api/review/getReviews/${id}`, {
+          withCredentials: true 
+        })
+          .then((res) => {
+            setReviews(res.data.reviews); 
+          })
+          .catch((err) => {
+            console.error("Error fetching reviews:", err);
+            // Optional: handle unauthorized specifically
+            if (err.response?.status === 401) {
+              console.log("Please log in to view reviews");
+            }
+          });
+      }
+  }, [id]);
+
+
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#E4D8B4]">
@@ -61,6 +85,9 @@ const BookPage = () => {
       </div>
     );
   }
+
+
+
 
   return (
     <div className="min-h-screen w-full bg-[#E4D8B4] text-gray-800 font-sans">
@@ -87,9 +114,25 @@ const BookPage = () => {
           <BookInfo book={book} />
           <Bookmetadata book={book} />
           <Bookauthor bookData={book} />
-          
-        </div>
+        
+          <BookCreateComment 
+            bookId={book.id || book._id} 
+            onReviewSuccess={(newReview) => setReviews([newReview, ...reviews])}
+          />
+         
 
+
+          <div className="mt-8 px-4 md:px-0">
+            <h3 className="text-lg font-bold mb-4">Reviews</h3>
+            {reviews.length > 0 ? (
+              reviews.map((rev) => (
+                <BookReviewComments key={rev._id} review={rev} />
+              ))
+            ) : (
+              <p>No reviews yet. Be the first!</p>
+            )}
+          </div>
+        </div>
       </div>
 
     </div>

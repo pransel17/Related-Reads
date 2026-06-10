@@ -4,6 +4,13 @@ const { Schema } = mongoose;
 
 const BookInfoSchema = new mongoose.Schema({
 
+    googleBookId: { 
+        type: String, 
+        required: true, 
+        unique: true,
+        index: true  
+    },
+
     BookName:{
         type: String
     },

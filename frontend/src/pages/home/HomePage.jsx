@@ -6,15 +6,25 @@ import TrendingBooksCard from "../../components/home_components/TrendingBooksCar
 import ReadingChallengePart from "../../components/home_components/ReadingChallengeBanner"
 import AdvertisementBanner from "../../components/home_components/AdvertisementBanner"
 import { useEffect, useState } from "react"
+import HomeFooter from "../../components/website_info/home_footer"
+import HomeSkeleton from "../../components/skeletons/home_skeleton"
 
 const HomePage = () => {
   
   const [trendingBooks, setTrendingBooks] = useState([]);
+  const [loading, setLoading] = useState(true); // New state
 
   useEffect(()=>{
     axios.get("http://localhost:2001/api/books/trendingBook")
-    .then((res)=> setTrendingBooks(res.data))
-    .catch((err) => console.error(err)) 
+    .then((res)=> {
+      setTrendingBooks(res.data);
+      setLoading(false); // Set loading to false once data is received
+    })
+
+    .catch((err) => {
+      console.error(err);
+      setLoading(false); // Set loading to false even if there's an error
+    });
 
   }, []);
 
@@ -99,6 +109,8 @@ const HomePage = () => {
 
 
       </div>
+
+      <HomeFooter/>
     </div>
   )
 }

@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/createReview/:bookId", protectRoute, createReview )
 router.post("/updateReadingStatus", protectRoute, updateReadingStatus)
-router.get("/:bookId", protectRoute, getBookReviews);
+router.get("/getReviews/:bookId", protectRoute, getBookReviews);
 //router.post("/editReview/:bookId", protectRoute, editReview )
 //router.post("/deleteReview/:bookId", protectRoute, deleteReview )
 

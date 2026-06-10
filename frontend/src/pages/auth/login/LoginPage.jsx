@@ -5,6 +5,7 @@ import { CiLock } from "react-icons/ci";
 import axios from 'axios';
 
 
+
 const LoginPage = () => {
 
 
@@ -43,89 +44,98 @@ const LoginPage = () => {
     const isError = false;
 
 
-  return (  
-    <div className="min-h-screen flex items-center justify-center bg-base-100 p-6">
-
-
-      <div className="absolute top-0 left-6 flex items-center gap-3">
-        <div className="w-15 h-15 rounded-full overflow-hidden border-none">
-            <img 
-                src="/Logos/logo-1.png" 
-                alt="Logo Icon" 
-                className="w-full h-full object-cover border-none" />
+return (
+    <div className="relative min-h-screen w-full bg-base-100 overflow-hidden">
+      
+      
+      <div className="absolute top-3 left-6 flex items-center gap-3 z-20">
+        <div className="w-14 h-14 rounded-full overflow-hidden">
+          <img src="/Logos/logo-1.png" alt="Logo" className="w-full h-full object-cover" />
         </div>
-        <div className="w-40 h-20  overflow-hidden border-none">
-          <img 
-            src="/Logos/logo-2.png" 
-            alt="Logo Icon" 
-            className="w-full h-full object-cover border-none" />
+        <div className="w-39 h-16 overflow-hidden">
+          <img src="/Logos/logo-2.png" alt="Logo" className="w-full h-full object-cover" />
         </div>
       </div>
 
-      
-      
-      <form onSubmit={handleSubmit} className="w-full max-w-md">
+      {/* Fixed Background Image: Stays in the background */}
+      <div className="fixed bottom-0 left-2 w-[1100px] h-[620px] pointer-events-none z-0">
+        <img src="/Designs/BooksBG.png" alt="Book Design" className="w-full h-auto object-contain" />
+      </div>
 
-        <fieldset className="fieldset text-black fieldset-lg bg-[#A4C0ED] rounded-box w-full max-w-md py-10 px-4 flex flex-col items-center text-black">
-        <div className="fieldset-legend flex flex-col items-center w-full mb-2">
-          <h2 className="text-xl font-bold">Welcome Back</h2>
-          <p className="text-sm font-normal">Login to Continue</p>
-        </div>
+      <div className="relative min-h-screen w-full flex items-center justify-end bg-cover bg-center bg-no-repeat z-5" 
+      style={{ backgroundImage: "url('/Designs/Subtract.png')", backgroundSize: "cover", backgroundPosition: "200px center" }}>
+
+
+        <div className="fixed top-0 right-0 h-screen w-[700px] z-15 flex flex-col justify-center">
         
+          <form onSubmit={handleSubmit} className="w-full px-10 flex flex-col items-center">
+
+            <fieldset className="fieldset text-black fieldset-lg rounded-box w-full max-w-sm py-10 px-6 flex flex-col items-center">
+              <div className="fieldset-legend flex flex-col items-center w-full mb-6">
+                <h2 className="text-xl font-bold">Welcome Back</h2>
+                <p className="text-sm font-normal">Login to Continue</p>
+              </div>
+
+              <span className="absolute -top-2.5 left-4 bg-white px-1 text-xs font-medium text-black">
+                Username
+              </span>
+
+{/* --- Username Input Container --- */}
+<div className="relative w-full mb-6">
+  {/* The Label "floating" on the border */}
+  <span className="absolute -top-2.5 left-4 bg-white px-1 text-xs font-medium text-black">
+    Username
+  </span>
   
-        <label className="input bg-white rounded-[40px] flex items-center gap-2 w-full max-w-xs border-none">
-          <IoPersonOutline className="text-gray-500" />
-          <input 
-            type="text" 
-            name="UserName"
-            className="grow text-black" 
-            placeholder="Enter Username" 
-            onChange={handleInputChange} 
-            value={formData.UserName}
-          />
-        </label>
+  {/* The Input with the Border */}
+  <label className="input bg-transparent border border-black rounded-lg flex items-center gap-2 w-full h-12 px-4 focus-within:ring-1 focus-within:ring-black">
+    <IoPersonOutline className="text-gray-500" />
+    <input 
+      type="text" 
+      name="UserName" 
+      className="grow text-black placeholder:text-gray-400 focus:outline-none" 
+      placeholder="Enter Username" 
+      onChange={handleInputChange} 
+      value={formData.UserName} 
+    />
+  </label>
+</div>
 
-        <label className="input bg-white rounded-[40px] flex items-center gap-2 w-full max-w-xs border-none">
-          <CiLock className="text-gray-500" />
-          <input 
-            type="password" 
-            name="Password"
-            className="grow text-black" 
-            placeholder="Enter Password" 
-            onChange={handleInputChange}
-            value={formData.Password}
-          />
-        </label>
+{/* --- Password Input Container --- */}
+<div className="relative w-full mb-6">
+  <span className="absolute -top-2.5 left-4 bg-white px-1 text-xs font-medium text-black">
+    Password
+  </span>
+  
+  <label className="input bg-transparent border border-black rounded-lg flex items-center gap-2 w-full h-12 px-4 focus-within:ring-1 focus-within:ring-black">
+    <CiLock className="text-gray-500" />
+    <input 
+      type="password" 
+      name="Password" 
+      className="grow text-black placeholder:text-gray-400 focus:outline-none" 
+      placeholder="Enter Password" 
+      onChange={handleInputChange} 
+      value={formData.Password} 
+    />
+  </label>
+</div>
 
-        {errorMessage && (
-          <p className="text-red-600 font-bold text-xs"> {errorMessage}</p> 
-        )}
-        
+              {errorMessage && <p className="text-red-600 font-bold text-xs mb-2">{errorMessage}</p>}
 
+              <button type="submit" disabled={isLoading} className="btn btn-neutral bg-[#F6FFDE] mt-4 border-none rounded-[40px] w-full">
+                {isLoading ? <span className="loading loading-spinner"></span> : "Login"}
+              </button>
 
-        {/* no linked route with this button, i need to ensure security sa with backend pa aayusin*/}
-        <button 
-          type="submit" 
-          disabled={isLoading} 
-          className="btn btn-neutral bg-[#F6FFDE] mt-4 border-none rounded-[40px] w-30 mb-2"
-        > {isLoading ? <span className="loading loading-spinner"></span> : "Login"}
-        </button>
+              <Link to="/ForgotPassword" className="link link-hover text-sm text-black mt-4">Forgot Password</Link>
+            </fieldset>
 
-        <Link 
-          to="/ForgotPassword" 
-          className="link link-hover text-sm text-black"> Forgot Password </Link>
-        </fieldset>
+            <p className="text-sm text-black mt-6">New User? 
+              <Link to='/signup' className="font-bold hover:underline ml-1">Sign up</Link>
+            </p>
 
-        <div className="flex flex-col items-center gap-1 mt-4">
-          <p className="text-sm text-black"> {`New User? `}
-            <Link 
-              to='/signup' 
-              className="text-black hover:underline hover:font-bold transition-all"> Sign up
-            </Link>
-          </p>
+          </form>
         </div>
-
-      </form> 
+      </div>
     </div>
   )
 }

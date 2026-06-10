@@ -6,7 +6,7 @@ const searchGoogleBooks = async (query) => {
       params: {
         q: query,
         key: process.env.GOOGLE_BOOKS_API_KEY,
-        maxResults: 1,
+        maxResults: 5,
       },
     });
 
