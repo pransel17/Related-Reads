@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../api/api';
 import TopNavbar from "../../components/common/TopNavbar";
 import BookInfo from "../../components/book_components/bookinfo";
 import Bookmetadata from "../../components/book_components/bookmetadata";
@@ -26,7 +26,7 @@ const BookPage = () => {
     let isMounted = true; 
     setLoading(true);
 
-    axios.get(`http://localhost:2001/api/books/bookPreview/${id}`)
+    api.get(`/api/books/bookPreview/${id}`)
       .then((res) => {
         if (isMounted) {
 
@@ -51,7 +51,7 @@ const BookPage = () => {
   useEffect(() => {
       if (id) {
         // ADD { withCredentials: true } HERE
-        axios.get(`http://localhost:2001/api/review/getReviews/${id}`, {
+        api.get(`/api/review/getReviews/${id}`, {
           withCredentials: true 
         })
           .then((res) => {

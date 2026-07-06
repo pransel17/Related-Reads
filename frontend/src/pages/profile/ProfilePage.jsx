@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";  
+import api from "../../api/api";  
 import TopNavbar from "../../components/common/TopNavbar";
 import ProfileCard from "../../components/profile_components/ProfileCard";
 
@@ -17,7 +17,7 @@ const ProfilePage = () => {
         setLoading(true);
         
 
-        const response = await axios.get(`http://localhost:2001/api/user/MyProfile/${UserName}`, {
+        const response = await api.get(`/api/user/MyProfile/${UserName}`, {
           withCredentials: true 
         });
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../../api/api";
 
 const EditProfileModal = ({ user }) => {
   const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ const EditProfileModal = ({ user }) => {
       console.log("Updating profile with:", formData);
       
       // FIXED: Added http:// and ensured URL is correct
-      const response = await axios.post(`http://localhost:2001/api/user/EditProfile`, 
+      const response = await api.post(`/api/user/EditProfile`, 
         formData, 
         { withCredentials: true }
       );

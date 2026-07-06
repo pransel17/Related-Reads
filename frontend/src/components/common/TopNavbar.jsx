@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { User } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import NavbarProfileDropdown from "./NavbarProfileDropdown";
-import axios from 'axios';
+import api from "../../api/api";
 
 const TopNavbar = () => {
 
@@ -75,7 +75,7 @@ const TopNavbar = () => {
           logout={async () => {
             try {
               // Now that axios is imported, this will work
-              await axios.post("http://localhost:2001/api/auth/log-out", {}, { withCredentials: true });
+              await api.post("/api/auth/log-out", {}, { withCredentials: true });
               window.location.href = "/login"; 
             } catch (error) {
               console.error("Logout failed:", error);

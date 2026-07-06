@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUserProfile } from '../../hooks/useUserProfile';
-import axios from 'axios';
+import api from '../../api/api';
 
 const ReadingChallengePart = () => {
   const { user, loading } = useUserProfile();
@@ -22,7 +22,7 @@ const ReadingChallengePart = () => {
     
     try {
       
-      await axios.post('http://localhost:2001/api/user/EditProfile', { 
+      await api.post('/api/user/EditProfile', { 
         NewReadingChallengeGoal: newGoal 
       }, { withCredentials: true });
       

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../api/api';
 
 const SearchBooks = () => {
   const [query, setQuery] = useState("");
@@ -12,7 +12,7 @@ const SearchBooks = () => {
       // Only fetch after user types more than 2 characters
       if (query.length > 2) {
         try {
-          const res = await axios.get(`http://localhost:2001/api/books/searchExternalBooks?q=${query}`);
+          const res = await api.get(`/api/books/searchExternalBooks?q=${query}`);
           setResults(res.data.books || []);
           setIsOpen(true);
         } catch (err) {

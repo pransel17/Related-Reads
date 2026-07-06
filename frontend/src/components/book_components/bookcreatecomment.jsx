@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../../api/api';
 import { Send } from 'lucide-react';
 
 const BookCreateComment = ({ bookId, onReviewSuccess }) => {
@@ -16,8 +16,8 @@ const BookCreateComment = ({ bookId, onReviewSuccess }) => {
         setError(null);
 
         try {
-            const response = await axios.post(
-                `http://localhost:2001/api/review/createReview/${bookId}`,
+            const response = await api.post(
+                `/api/review/createReview/${bookId}`,
                 { text, rating: Number(rating) },
                 { withCredentials: true }
             );
