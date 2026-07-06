@@ -19,12 +19,6 @@ function App (){
         <Route path='/profile/:UserName' element={<ProfilePage/>}/>
         <Route path='/home' element={<HomePage/>}/>
         <Route path='/book/:id' element={<BookPage/>}/>
-        
-
-
-
-
-
 
 
       </Routes>
