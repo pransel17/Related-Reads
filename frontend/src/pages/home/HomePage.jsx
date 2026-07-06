@@ -1,7 +1,7 @@
 import TopNavbar from "../../components/common/TopNavbar"
 import SearchBooks from "../../components/home_components/SearchBooks"
 import SuggestedBookCard from "../../components/home_components/SuggestedBookCard"
-import axios from "axios"
+import api from "../../api/api"
 import TrendingBooksCard from "../../components/home_components/TrendingBooksCard"
 import ReadingChallengePart from "../../components/home_components/ReadingChallengeBanner"
 import AdvertisementBanner from "../../components/home_components/AdvertisementBanner"
@@ -15,7 +15,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true); // New state
 
   useEffect(()=>{
-    axios.get("http://localhost:2001/api/books/trendingBook")
+    api.get("/api/books/trendingBook")
     .then((res)=> {
       setTrendingBooks(res.data);
       setLoading(false); // Set loading to false once data is received
