@@ -30,7 +30,7 @@ const HomePage = () => {
 
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-[#E4D8B4]">
+    <div className="min-h-screen flex flex-col items-center">
 
       <TopNavbar/>     
       <div className="w-full max-w-2xl px-4 mt-3 flex justify-center">

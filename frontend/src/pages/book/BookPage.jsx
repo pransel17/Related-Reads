@@ -90,7 +90,7 @@ const BookPage = () => {
 
 
   return (
-    <div className="min-h-screen w-full bg-[#E4D8B4] text-gray-800 font-sans">
+    <div className="min-h-screen w-full text-gray-800 font-sans">
       
       <TopNavbar />
       

@@ -12,7 +12,7 @@ const NavbarProfileDropdown = ({ user, logout, placeholder }) => {
       </div>
       
       {/* Dropdown Menu */}
-      <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[50] p-4 shadow-xl bg-base-100 rounded-box w-72 border border-gray-200">
+      <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[50] p-4 shadow-xl bg-[#EFEADB] rounded-box w-72 border border-gray-200">
         <li className="mb-2">
           <Link to={`/profile/${user?.UserName}`} className="flex items-center gap-3 hover:bg-transparent">
             <div className="w-12 h-12 rounded-full overflow-hidden">

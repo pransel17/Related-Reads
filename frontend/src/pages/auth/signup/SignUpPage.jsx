@@ -54,7 +54,7 @@ const SignUpPage = () => {
 	const isError = false;
 
   return (
-    <div  className="min-h-screen flex items-center justify-center bg-base-100 p-6">
+    <div  className="min-h-screen flex items-center justify-center p-6">
         <div className="absolute top-0 left-6 flex items-center gap-3">
             <div className="w-15 h-15 rounded-full overflow-hidden border-none">
                 <img 
