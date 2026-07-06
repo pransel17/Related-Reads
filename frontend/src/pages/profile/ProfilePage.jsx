@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";  
-import TopNavbar from "../../components/common/topnavbar";
+import TopNavbar from "../../components/common/TopNavbar";
 import ProfileCard from "../../components/profile_components/ProfileCard";
 
 const ProfilePage = () => {
