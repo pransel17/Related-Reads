@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import TopNavbar from "../../components/common/topnavbar";
+import TopNavbar from "../../components/common/TopNavbar";
 import BookInfo from "../../components/book_components/bookinfo";
 import Bookmetadata from "../../components/book_components/bookmetadata";
 import Bookcover from "../../components/book_components/bookcover";
