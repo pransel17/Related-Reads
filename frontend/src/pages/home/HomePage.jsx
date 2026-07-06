@@ -1,4 +1,3 @@
-
 import TopNavbar from "../../components/common/TopNavbar"
 import SearchBooks from "../../components/home_components/SearchBooks"
 import SuggestedBookCard from "../../components/home_components/SuggestedBookCard"
