@@ -3,7 +3,7 @@ import { IoPersonOutline  } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineMail } from "react-icons/ai";
-import axios from 'axios';
+import api from '../../../api/api';
 
 const SignUpPage = () => {
 
@@ -27,7 +27,7 @@ const SignUpPage = () => {
             //Send data to the backend
             // Vite proxy handles the 'http://localhost:2001' part
             // always check the route,, hhahahah
-            const res = await axios.post("/api/auth/sign-up", formData);
+            const res = await api.post("/auth/sign-up", formData, { withCredentials: true });
             
             console.log("Success:", res.data);
             setIsSuccess(true); // Trigger the success UI

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { IoPersonOutline  } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
-import axios from 'axios';
+import api from '../../../api/api';
 
 
 
@@ -27,7 +27,7 @@ const LoginPage = () => {
     
         
         try {
-            const res = await axios.post("/api/auth/sign-in", formData);
+            const res = await api.post("/auth/sign-in", formData, { withCredentials: true });
             navigate(`/profile/${formData.UserName}`); 
                   } catch (error) {
             const errorMsg = error.response?.data?.error || "Login failed. Please try again.";
