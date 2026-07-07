@@ -7,6 +7,7 @@ const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:2001';
 
 const api = axios.create({
   baseURL: baseURL,
+  withCredentials: true, // Always send cookies with requests
 });
 
 export default api;

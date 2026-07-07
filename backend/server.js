@@ -19,7 +19,7 @@ const allowedOrigins = [
     process.env.FRONTEND_URL || "https://related-reads.vercel.app" // Fallback from env
 ];
 
-app.use(cors({
+const corsOptions = {
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin || allowedOrigins.includes(origin)) {
@@ -31,9 +31,9 @@ app.use(cors({
     credentials: true, // Required since using cookieParser
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
-}));
-}));
+};
 
+app.use(cors(corsOptions));
 
 app.use(cookieParser()); // parses cookies sent by the browser (or Postman) and makes them readable inside your backend
 dotenv.config(); // load env file. to access priv fiiles
