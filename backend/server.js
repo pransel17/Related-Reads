@@ -12,17 +12,22 @@ import cors from "cors";
 
 const app = express();
 
-// CORS Configuration - must use exact origin when credentials: true
-// In production: use the Vercel URL from environment variable
-// In development: use localhost:3000
-const frontendURL = process.env.FRONTEND_URL || "https://related-reads.vercel.app";
-const isDevelopment = process.env.NODE_ENV !== "production";
-
+// CORS Configuration - allows both production and preview Vercel URLs
 const corsOptions = {
-    origin: isDevelopment ? "http://localhost:3000" : frontendURL,
-    credentials: true, // Must be true for cookies to work
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+  origin: function (origin, callback) {
+    // Allow requests from:
+    // - localhost (development)
+    // - Any Vercel domain (production + all preview deployments)
+    // - No origin header (mobile apps, curl, Postman)
+    if (!origin || origin.includes("localhost") || origin.includes("vercel.app")) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Required for cookies
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 };
 
 app.use(cors(corsOptions));
