@@ -2,9 +2,8 @@
 
 A book review app where you can search for books, leave reviews, rate them, and keep track of what you're reading.
 
-**Check it out:** [related-reads.vercel.app](https://related-reads.vercel.app)
 
-⚠️ **Still in development** - more features coming soon!
+ **Still in development** - more features coming soon
 
 ---
 
