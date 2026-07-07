@@ -109,7 +109,12 @@ export const signin = async (req,res) => {
 
 export const logout = async (req,res) => {
     try{ 
-        res.cookie("jwt", "", {maxAge:0}) // terminate cookie
+        res.cookie("jwt", "", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 0 // terminate cookie
+        }) 
         res.status(200).json({message: "Logged out successfully"})
 
     }

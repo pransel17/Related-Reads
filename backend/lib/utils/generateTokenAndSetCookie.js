@@ -9,12 +9,10 @@ const generateTokenAndSetCookie = (userID,res) => {
 
     res.cookie("jwt", token, { // this stores the token in a way sending it like a cookie.
         httpOnly: true, 
-        secure: process.env.NODE_ENV !== "development",
-        sameSite: "strict",
+        secure: true, // Always true in production (required when sameSite: "none")
+        sameSite: "none", // Allow cross-site cookie sending (for Vercel -> Render)
         maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds, this set how long nakalogged in user until mag auto out.
-
     })
-
 }
 
 export default generateTokenAndSetCookie;
