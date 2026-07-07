@@ -5,7 +5,7 @@ import api from '../api/api';
 // services/userService.js
 export const getMyProfile = async () => {  
   try {
-    const response = await api.get(`/user/ProfileInfo/me`, {  
+    const response = await api.get(`/api/user/ProfileInfo/me`, {  
       withCredentials: true 
     });
     return response.data;

@@ -27,7 +27,7 @@ const SignUpPage = () => {
             //Send data to the backend
             // Vite proxy handles the 'http://localhost:2001' part
             // always check the route,, hhahahah
-            const res = await api.post("/auth/sign-up", formData, { withCredentials: true });
+            const res = await api.post("/api/auth/sign-up", formData, { withCredentials: true });
             
             console.log("Success:", res.data);
             setIsSuccess(true); // Trigger the success UI

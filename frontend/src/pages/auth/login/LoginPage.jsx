@@ -27,7 +27,7 @@ const LoginPage = () => {
     
         
         try {
-            const res = await api.post("/auth/sign-in", formData, { withCredentials: true });
+            const res = await api.post("/api/auth/sign-in", formData, { withCredentials: true });
             navigate(`/profile/${formData.UserName}`); 
                   } catch (error) {
             const errorMsg = error.response?.data?.error || "Login failed. Please try again.";
