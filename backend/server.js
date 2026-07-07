@@ -14,8 +14,9 @@ const app = express();
 
 // Allow both localhost (development) and Vercel deployment (production)
 const allowedOrigins = [
-    "http://localhost:3000", // Local development
-    process.env.FRONTEND_URL || "https://related-reads.vercel.app" // Production (set in env variables)
+    "http://localhost:3000",                                // Local development
+    "https://related-reads.vercel.app",                    // Production Vercel domain
+    process.env.FRONTEND_URL || "https://related-reads.vercel.app" // Fallback from env
 ];
 
 app.use(cors({
@@ -27,7 +28,10 @@ app.use(cors({
             callback(new Error("Not allowed by CORS"));
         }
     },
-    credentials: true // Required since using cookieParser
+    credentials: true, // Required since using cookieParser
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 }));
 
 
