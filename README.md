@@ -1,23 +1,101 @@
 # Related-Reads
 
-A web-based books review where users can add books by title, author, and genre, leave reviews, and rate them. 
+A book review app where you can search for books, leave reviews, rate them, and keep track of what you're reading.
 
+**Check it out:** [related-reads.vercel.app](https://related-reads.vercel.app)
 
-___
+⚠️ **Still in development** - more features coming soon!
 
-notes (for me):
+---
 
+## Features
 
-backend part 
-- books info will be fetchh from google books api
+- Search for books from Google Books
+- Write and read book reviews
+- Rate books (1-5 stars)
+- Keep track of your reading list
+- View other users' profiles and what they're reading
 
+---
 
-----> updating reading status bout a book
+## How to Use
 
-i approached it by storing the book ids in the reading status array in user sche,ma. so i can just write a function that will make the books appear in their specific list in user (my books) part 
+1. Sign up with your email
+2. Search for books
+3. Add them to your reading list or write a review
+4. Rate and share your thoughts
+5. Check out what others are reading
 
------> showing reviews
+---
 
-display the reviiews of a book by finding which reviews have same book id 
+## Tech Stack
 
-----> Axios  for ggoogle api integ
+**Frontend:**
+- React.js
+- Vite
+- Tailwind CSS
+- Axios
+
+**Backend:**
+- Node.js
+- Express.js
+- MongoDB
+- JWT Authentication
+
+**APIs & Services:**
+- Google Books API
+- Cloudinary (image storage)
+
+**Deployment:**
+- Vercel (Frontend)
+- Render (Backend)
+- MongoDB Atlas
+
+---
+
+Made by Francelle Lorraine | [GitHub](https://github.com/pransel17)
+
+- Search for books from Google Books
+- Write and read book reviews
+- Rate books (1-5 stars)
+- Keep track of your reading list
+- View other users' profiles and what they're reading
+
+---
+
+## How to Use
+
+1. Sign up with your email
+2. Search for books
+3. Add them to your reading list or write a review
+4. Rate and share your thoughts
+5. Check out what others are reading
+
+---
+
+## Tech Stack
+
+**Frontend:**
+- React.js
+- Vite
+- Tailwind CSS
+- Axios
+
+**Backend:**
+- Node.js
+- Express.js
+- MongoDB
+- JWT Authentication
+
+**APIs & Services:**
+- Google Books API
+- Cloudinary (image storage)
+
+**Deployment:**
+- Vercel (Frontend)
+- Render (Backend)
+- MongoDB Atlas
+
+---
+
+Made by Francelle Lorraine | [GitHub](https://github.com/pransel17)
