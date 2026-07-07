@@ -12,9 +12,21 @@ import cors from "cors";
 
 const app = express();
 
+// Allow both localhost (development) and Vercel deployment (production)
+const allowedOrigins = [
+    "http://localhost:3000", // Local development
+    process.env.FRONTEND_URL || "https://related-reads.vercel.app" // Production (set in env variables)
+];
 
 app.use(cors({
-    origin: "http://localhost:3000", // React port 
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true // Required since using cookieParser
 }));
 
