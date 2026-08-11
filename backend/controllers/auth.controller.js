@@ -137,3 +137,11 @@ export const getMe = async (req,res) => {
         res.status(500).json({error: "Internal  Server Error"})
     }
 }
+
+export const googleAuth = async (req, res) => {
+    
+}
+
+export const googleCallback: = async (req, res) => {
+    
+}

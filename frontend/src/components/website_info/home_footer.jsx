@@ -2,9 +2,9 @@ import React from 'react'
 
 const home_footer = () => {
   return (
-    <div className="w-full mt-10">
+    <div className="w-full mt-10 ">
 
-        <footer className="footer sm:footer-horizontal bg-base-100 text-base-content p-10 text-[#000000] ">
+        <footer className="footer sm:footer-horizontal bg-[#EFEADB] text-base-content p-10 text-[#000000] ">
           <nav>
             <h6 className="footer-title text-md font-bold">HOLDER FOR NOW</h6>
             <a className="link link-hover">Branding</a>
@@ -15,7 +15,7 @@ const home_footer = () => {
           
 
         </footer>
-        <footer className="footer bg-base-100 text-base-content border-base-300 border-t px-10 py-4">
+        <footer className="footer bg-[#EFEADB] text-base-content border-base-300 border-t px-10 py-4">
           <aside className="grid-flow-col items-center">
             <div className="w-10 h-10 lg:w-14 lg:h-14 rounded-full overflow-hidden">
               <img src="/Logos/logo-1.png" alt="Logo Icon" className="w-full h-full object-cover" />
